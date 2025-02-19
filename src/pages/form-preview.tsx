@@ -19,7 +19,7 @@ import { cn, getRandomInt, getForm, validateInput } from '@utils';
 import notFound from '@assets/form-not-found.svg';
 import noFields from '@assets/no-fields.svg';
 
-import type { FormType } from '@components';
+import type { FormType, TextField, NumberField } from '@components';
 
 const FormPreview = () => {
 	const [validationErrors, setValidationErrors] = useState<Record<string, string[]>>({});
@@ -176,13 +176,25 @@ const FormPreview = () => {
 										</SelectContent>
 									</Select>
 								</div>
-							) : ['text', 'email', 'url', 'number'].includes(formInput.type) ? (
+							) : ['text', 'number'].includes(formInput.type) ? (
 								<Input
 									key={inputIdx}
 									label={formInput.label}
 									required={formInput.isRequired}
 									placeholder={formInput.placeholder}
-									defaultValue={formInput.defaultValue}
+									defaultValue={
+										(formInput as TextField | NumberField).defaultValue
+									}
+									name={inputIdx.toString()}
+									message={validationErrors?.[inputIdx.toString()]?.join(', ')}
+									messageType="error"
+								/>
+							) : ['email', 'url'].includes(formInput.type) ? (
+								<Input
+									key={inputIdx}
+									label={formInput.label}
+									required={formInput.isRequired}
+									placeholder={formInput.placeholder}
 									name={inputIdx.toString()}
 									message={validationErrors?.[inputIdx.toString()]?.join(', ')}
 									messageType="error"

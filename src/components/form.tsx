@@ -239,7 +239,7 @@ const Form = ({ id, name, inputs }: FormProps) => {
 				</div>
 			)}
 
-			<div className="flex justify-between">
+			<div className="mt-4 flex justify-between">
 				<div className="flex items-center gap-2">
 					<Button
 						variant="secondary"
